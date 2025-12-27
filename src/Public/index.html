@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Système de Gestion Bancaire</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="./Css/styles.css">
+
+</head>
+<body>
+
+<div class="container py-5">
+
+    
+    <div class="text-center mb-5">
+        <div class="app-icon mb-3">
+            <i class="bi bi-bank"></i>
+        </div>
+        <h2 class="fw-bold">Système de Gestion Bancaire</h2>
+        <p class="text-muted">Gérez vos comptes et transactions en toute simplicité</p>
+        
+        <p class="compte-info" id="compteInfo" style="display: none;"></p>
+    </div>
+
+    
+    <div class="row g-4 mb-4">
+
+       <a href="./Pages/CreateAcc.html" class="col-12 col-md-6 text-decoration-none text-dark">
+        
+            <div class="">
+                <div class="action-card card-blue">
+                    <div class="action-icon text-primary">
+                        <i class="bi bi-plus-circle"></i>
+                    </div>
+                    <h5 class="fw-semibold">Créer un compte</h5>
+                    <p class="text-muted mb-0">Ouvrir un nouveau compte chèque ou épargne</p>
+                </div>
+            </div>
+
+        </a> 
+
+        <a href="./Pages/ListerCompptes.html" class="col-12 col-md-6 text-decoration-none text-dark">
+
+            <div class="">
+                <div class="action-card card-green">
+                    
+                    <span class="badge-pill" id="compteBadge" style="display: none;"></span>
+                    <div class="action-icon text-success">
+                        <i class="bi bi-credit-card"></i>
+                    </div>
+                    <h5 class="fw-semibold">Afficher les comptes</h5>
+                    <p class="text-muted mb-0">Voir la liste de tous vos comptes</p>
+                </div>
+            </div>
+
+        </a>
+
+
+        <a href="./Pages/AddTransac.html" class="col-12 col-md-6 text-decoration-none text-dark">
+
+            <div class="">
+                <div class="action-card card-orange">
+                    <div class="action-icon text-warning">
+                        <i class="bi bi-arrow-down-up"></i>
+                    </div>
+                    <h5 class="fw-semibold">Ajouter une transaction</h5>
+                    <p class="text-muted mb-0">Effectuer un dépôt ou un retrait</p>
+                </div>
+            </div>
+
+        </a>
+
+
+        <a href="./Pages/ListTransac.html" class="col-12 col-md-6 text-decoration-none text-dark">
+
+            <div class="">
+                <div class="action-card card-purple">
+                    <div class="action-icon text-primary">
+                        <i class="bi bi-list-ul"></i>
+                    </div>
+                    <h5 class="fw-semibold">Lister les transactions</h5>
+                    <p class="text-muted mb-0">Consulter l'historique des opérations</p>
+                </div>
+            </div>
+
+        </a>
+
+
+    </div>
+
+    
+    <div class="text-center mb-4">
+        <a href="#" class="text-decoration-none text-muted">
+            <i class="bi bi-box-arrow-right"></i> Quitter
+        </a>
+    </div>
+
+    
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="info-box">
+                <h6 class="fw-bold mb-3">Informations importantes</h6>
+
+                <p class="mb-2">
+                    <strong>💰 Comptes Épargne :</strong>
+                    Période de blocage durant laquelle les retraits ne sont pas autorisés
+                </p>
+
+                <p class="mb-0">
+                    <strong>💳 Comptes Chèque :</strong>
+                    Toutes les transactions sont facturées à 0.8% du montant
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    
+    let nombreComptes = 2; 
+
+    
+    
+        const compteInfo = document.getElementById('compteInfo');
+        const compteBadge = document.getElementById('compteBadge');
+        
+        if (nombreComptes > 0) {
+            
+            compteInfo.textContent = `${nombreComptes} compte${nombreComptes > 1 ? 's' : ''} enregistré${nombreComptes > 1 ? 's' : ''}`;
+            compteInfo.style.display = 'block';
+            
+            
+            compteBadge.textContent = nombreComptes;
+            compteBadge.style.display = 'flex';
+        } else {
+            
+            compteInfo.style.display = 'none';
+            compteBadge.style.display = 'none';
+        }
+    
+        
+</script>
+
+</body>
+</html>

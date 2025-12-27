@@ -1,0 +1,182 @@
+
+
+        body {
+            background: radial-gradient(circle at top, #f5f8ff, #eef2fb);
+            min-height: 100vh;
+            padding: 30px 0;
+        }
+
+        .back-link {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .main-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,.08);
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .header-icon {
+            width: 45px;
+            height: 45px;
+            background: #d1fae5;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #10b981;
+            font-size: 22px;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .empty-icon {
+            font-size: 80px;
+            color: #d1d5db;
+            margin-bottom: 15px;
+        }
+
+        .empty-text {
+            color: #9ca3af;
+            font-size: 1rem;
+        }
+
+        /* Account cards */
+        .account-card {
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all .2s ease;
+        }
+
+        .account-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,.08);
+        }
+
+        .account-card.cheque {
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+        }
+
+        .account-card.epargne {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+        }
+
+        .account-type-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .badge-cheque {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-epargne {
+            background: #fce7f3;
+            color: #be185d;
+        }
+
+        .badge-bloque {
+            background: #fecaca;
+            color: #dc2626;
+            margin-left: 8px;
+            padding: 4px 10px;
+            font-size: 0.8rem;
+        }
+
+        .account-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+        }
+
+        .account-details {
+            flex: 1;
+        }
+
+        .account-detail-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+        }
+
+        .account-detail-row i {
+            width: 16px;
+            font-size: 14px;
+        }
+
+        .account-balance {
+            text-align: right;
+        }
+
+        .balance-label {
+            color: #9ca3af;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+
+        .balance-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 4px;
+        }
+
+        .transaction-count {
+            color: #9ca3af;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .account-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .account-balance {
+                text-align: left;
+            }
+
+            .balance-amount {
+                font-size: 1.3rem;
+            }
+        }
+        

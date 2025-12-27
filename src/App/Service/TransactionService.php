@@ -1,0 +1,89 @@
+<?php
+namespace App\Service;
+
+use App\entity\Transaction;
+use App\entity\TypeDeTransaction;
+use App\repository\TransactionRepository;
+
+class TransactionService
+{
+    
+
+    private TransactionRepository $transactionRepo;
+    private ComptesService $comptesService;
+
+    public function __construct()
+    {
+        $this->transactionRepo = new TransactionRepository();
+        $this->comptesService = new ComptesService();
+    }
+
+
+    public function creatTransac($numeroDeCompte, $type, $montant) : bool{
+
+
+        $compte = $this->comptesService->searchAccByNum($numeroDeCompte);
+
+        if ($compte === null) {
+            return false; // Compte non trouvé
+        }
+
+        $frais = 0.0;
+        $montantFinal = $montant;
+
+        if ($type == TypeDeTransaction::RETRAIT) {
+
+            if ($compte->isCompteEpargne()){
+
+                print("Les retraits ne sont pas autorisés sur un compte épargne.");
+                return false;
+            } 
+
+            if ($compte->isCompteCheque()){
+
+                $frais = $compte->getFraisTransaction($montant);
+                $montantFinal += $frais;
+                print("Frais de transaction appliqués : " . $frais . "\n");
+            }
+
+            if ($compte->getSolde() < $montantFinal) {
+                print("Solde insuffisant pour effectuer cette transaction.");
+                return false;
+            }
+
+                  $compte->setSolde($compte->getSolde()-$montantFinal) ;  
+        }
+        else {
+
+                if ($compte->isCompteCheque()){
+
+                    $frais = $compte->getFraisTransaction($montant);
+                    $montantFinal -= $frais;
+                    print("Frais de transaction appliqués : " . $frais . "\n");
+
+                }
+                  $compte->setSolde($compte->getSolde()+$montantFinal) ;                
+
+        }
+
+        $transaction = new Transaction(
+            montant: $montantFinal,
+            type: $type,
+            compte:  $compte,
+            frais:$frais,
+        );
+
+        $this->transactionRepo->insertTransaction($transaction);
+
+        return true;
+    }
+
+    public function listTypeTrans($numeroDeCompte): array{
+        return TypeDeTransaction::cases();
+    }
+
+
+    public function searchTransacByACC($numeroDeCompte): array{
+        return $this->transactionRepo->selectTransaction($numeroDeCompte);
+    }
+}

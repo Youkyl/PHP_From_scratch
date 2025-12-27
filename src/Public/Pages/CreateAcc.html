@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer un compte</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../Css/CreateAcc.css">
+
+</head>
+<body>
+
+<div class="container py-5">
+
+    <a href="../index.html" class="text-decoration-none text-primary mb-3 d-inline-block">
+        ← Retour au menu
+    </a>
+
+    
+    <div class="card card-form mx-auto p-4">
+
+        <div class="d-flex align-items-center gap-3 mb-4">
+            <div class="icon-circle">
+                <i class="bi bi-plus-lg"></i>
+            </div>
+            <h4 class="mb-0 fw-semibold">Créer un nouveau compte</h4>
+        </div>
+
+        <form>
+
+            
+            <div class="mb-3">
+                <label class="form-label">Prénom du titulaire</label>
+                <input type="text" class="form-control" placeholder="Ex: Jean">
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label">Nom du titulaire</label>
+                <input type="text" class="form-control" placeholder="Ex: Dupont">
+            </div>
+
+            
+            <div class="mb-3">
+                <label class="form-label">Type de compte</label>
+                <select class="form-select" id="typeCompte">
+                    <option value="">-- Sélectionner --</option>
+                    <option value="cheque">Compte chèque</option>
+                    <option value="epargne">Compte épargne</option>
+                </select>
+            </div>
+
+            
+            <div id="alerteCheque" class="alert alert-warning d-none">
+                <i class="bi bi-exclamation-triangle me-1"></i>
+                Les opérations sur un compte chèque sont facturées à <strong>0.8%</strong> du montant
+            </div>
+
+            
+            <div id="blocageEpargne" class="d-none">
+                <div class="mb-3">
+                    <label class="form-label">Durée de blocage (en mois)</label>
+                    <input type="number" class="form-control" value="12" min="1">
+                </div>
+
+                <small class="text-muted d-flex align-items-center gap-2 mb-3">
+                    <i class="bi bi-info-circle"></i>
+                    Durant cette période, les retraits ne seront pas autorisés
+                </small>
+            </div>
+
+            
+            <div class="mb-4">
+                <label class="form-label">Solde initial (FCFA)</label>
+                <input type="number" class="form-control" value="0.00" step="0.01">
+            </div>
+
+            
+            <button type="submit" class="btn btn-primary w-100 py-2">
+                <i class="bi bi-bank me-2"></i>Créer le compte
+            </button>
+
+        </form>
+    </div>
+</div>
+
+<script src="../Js/CreateAcc.js"></script>
+
+</body>
+</html>

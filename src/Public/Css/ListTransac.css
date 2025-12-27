@@ -1,0 +1,231 @@
+       body {
+            background: radial-gradient(circle at top, #f5f8ff, #eef2fb);
+            min-height: 100vh;
+            padding: 30px 0;
+        }
+
+        .back-link {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .main-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,.08);
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .header-icon {
+            width: 45px;
+            height: 45px;
+            background: #dbeafe;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2563eb;
+            font-size: 22px;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .empty-icon {
+            font-size: 80px;
+            color: #d1d5db;
+            margin-bottom: 15px;
+        }
+
+        .empty-text {
+            color: #9ca3af;
+            font-size: 1rem;
+        }
+
+        /* Account selector */
+        .form-label {
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-select {
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            padding: 10px 14px;
+        }
+
+        .form-select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Account info box */
+        .account-info-box {
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .account-holder {
+            color: #6b7280;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+
+        .account-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .balance-label {
+            color: #6b7280;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+            text-align: right;
+        }
+
+        .balance-amount {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        /* Transactions section */
+        .transactions-header {
+            font-size: 0.95rem;
+            color: #6b7280;
+            margin: 25px 0 15px;
+        }
+
+        /* Transaction card */
+        .transaction-card {
+            border-radius: 10px;
+            padding: 16px 18px;
+            margin-bottom: 12px;
+            border-left: 4px solid;
+            transition: all .2s ease;
+        }
+
+        .transaction-card:hover {
+            transform: translateX(2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,.08);
+        }
+
+        .transaction-card.depot {
+            background: #f0fdf4;
+            border-left-color: #10b981;
+        }
+
+        .transaction-card.retrait {
+            background: #fef2f2;
+            border-left-color: #ef4444;
+        }
+
+        .transaction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .transaction-type {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .transaction-type.depot {
+            color: #059669;
+        }
+
+        .transaction-type.retrait {
+            color: #dc2626;
+        }
+
+        .transaction-amount {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .transaction-amount.depot {
+            color: #059669;
+        }
+
+        .transaction-amount.retrait {
+            color: #dc2626;
+        }
+
+        .transaction-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .transaction-detail {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .transaction-detail i {
+            width: 16px;
+            font-size: 14px;
+        }
+
+        .transaction-detail.fee {
+            color: #92400e;
+        }
+
+        @media (max-width: 768px) {
+            .account-info-box {
+                flex-direction: column;
+                gap: 15px;
+                align-items: start;
+            }
+
+            .balance-label, .balance-amount {
+                text-align: left;
+            }
+
+            .transaction-header {
+                flex-direction: column;
+                align-items: start;
+                gap: 8px;
+            }
+        }
