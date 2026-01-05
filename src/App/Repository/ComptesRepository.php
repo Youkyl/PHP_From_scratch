@@ -1,7 +1,7 @@
 <?php
-namespace App\Repository;
+namespace App\repository;
 
-use Config\Database;
+use App\core\Database;
 use App\entity\Comptes;
 use App\entity\TypeDeCompte;
 use PDO;
@@ -13,7 +13,7 @@ class ComptesRepository
 
     public function __construct()
     {
-        $this->db = Database::getConnection();
+        $this->db = Database::getInstance();
     }
 
     public function insertCompte($compte) : void{
@@ -58,6 +58,8 @@ class ComptesRepository
 
 
     public function selectAccByNum($numeroCompte):Comptes {
+        //var_dump($numeroCompte);
+        //exit;
     
         $sql = "SELECT * FROM compte WHERE numero_compte = :num";
 

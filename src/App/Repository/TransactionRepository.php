@@ -1,7 +1,7 @@
 <?php
-namespace App\Repository;
+namespace App\repository;
 
-use Config\Database;
+use App\core\Database;
 use App\entity\Transaction;
 use App\entity\TypeDeTransaction;
 use Exception;
@@ -14,7 +14,7 @@ class TransactionRepository{
 
     public function __construct()
     {
-        $this->db = Database::getConnection();
+        $this->db = Database::getInstance();
     }
 
     public function insertTransaction($transaction) : void{
@@ -85,6 +85,23 @@ class TransactionRepository{
             );
 
             $row = $stmt->fetch();
+        }
+
+        return $transactions;
+    }
+
+    public function selectAll(): array
+    {
+        $stmt = $this->db->query("SELECT * FROM transaction");
+        $transactions = [];
+
+        while ($row = $stmt->fetch()) {
+            $transactions[] = new Transaction(
+                montant:$row['montant'],
+                type:TypeDeTransaction::fromDatabase($row['type']),
+                id: $row['id'],
+                frais:$row['frais']
+            );
         }
 
         return $transactions;

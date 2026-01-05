@@ -1,0 +1,194 @@
+
+/* ================= RESET ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f9fafb;
+    color: #101828;
+}
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+    width: 260px;
+    background: #101828;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar-header {
+    padding: 24px;
+    border-bottom: 1px solid #1e2939;
+}
+
+.sidebar-header h2 {
+    font-size: 18px;
+}
+
+.sidebar-header p {
+    font-size: 12px;
+    color: #98a2b3;
+    margin-top: 4px;
+}
+
+.menu {
+    padding: 16px;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 48px;
+    padding: 0 16px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.2s ease;
+}
+
+/* ==== ICÔNES SIDEBAR ==== */
+.menu a i {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: #c7d2fe;
+}
+
+.menu a.active {
+    background: #155dfc;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+}
+
+.menu a.active i {
+    color: #ffffff;
+}
+
+.menu a:hover {
+    background: #1e2939;
+}
+
+.logout {
+    padding: 16px;
+    border-top: 1px solid #1e2939;
+}
+
+.logout a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 10px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.logout i {
+    font-size: 16px;
+    color: #fda4af;
+}
+
+.logout a:hover {
+    background: #1e2939;
+}
+
+
+/* ================= MAIN ================= */
+.main {
+    flex: 1;
+    padding: 32px;
+}
+
+.page-header h1 {
+    font-size: 30px;
+}
+
+.page-header p {
+    color: #475467;
+    margin-top: 8px;
+}
+
+/* ================= CARD ================= */
+.card {
+    margin-top: 24px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    padding: 24px;
+}
+
+/* ================= TABLE ================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f9fafb;
+}
+
+th {
+    text-align: left;
+    font-size: 12px;
+    color: #667085;
+    padding: 14px;
+}
+
+td {
+    padding: 16px 14px;
+    font-size: 14px;
+    border-top: 1px solid #f0f2f5;
+}
+
+.badge {
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.badge-blue {
+    background: #eff6ff;
+    color: #155dfc;
+}
+
+.badge-green {
+    background: #ecfdf3;
+    color: #027a48;
+}
+
+/* ================= EMPTY STATE ================= */
+.empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #667085;
+}
+
+.empty i {
+    font-size: 48px;
+    color: #d0d5dd;
+    margin-bottom: 16px;
+}
+
+.empty p {
+    margin-top: 8px;
+    font-size: 14px;
+}

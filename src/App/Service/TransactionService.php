@@ -1,5 +1,5 @@
 <?php
-namespace App\Service;
+namespace App\service;
 
 use App\entity\Transaction;
 use App\entity\TypeDeTransaction;
@@ -85,5 +85,9 @@ class TransactionService
 
     public function searchTransacByACC($numeroDeCompte): array{
         return $this->transactionRepo->selectTransaction($numeroDeCompte);
+    }
+
+    public function searchTransac(): array{
+        return $this->transactionRepo->selectAll();
     }
 }

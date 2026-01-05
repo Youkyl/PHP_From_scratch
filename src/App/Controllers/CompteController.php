@@ -1,30 +1,43 @@
 <?php
 
-namespace App\Controllers;
+namespace App\controllers;
 
-use App\Core\Controller;
-use App\Entity\Comptes;
-use App\Service\ComptesService;
+use App\core\Controller;
+use App\entity\Comptes;
+use App\service\ComptesService;
+use App\service\TransactionService;
 
 class CompteController extends Controller
 {
-    Private ComptesService $compteService;
+    private ComptesService $compteService;
+    private TransactionService $transacServ;
 
     public function __construct()
     {
-        $this->compteService = new ComptesService();
+     $this->compteService = new ComptesService();
+     $this->transacServ = new TransactionService();
     }
     
     public function index()
     {
-        $comptes = [];
-        //require_once __DIR__ . '/../../Public/Pages/ListerCompptes.html';
-        $this->renderHtml(__DIR__ . '/../../App/View/Pages/ListerCompptes.html', ['comptes' => $comptes]);
+        $comptes =  $this->compteService->searchAcc();
+        $transactions = $this->transacServ->searchTransac();
+
+        $nbrTransac = [];
+
+        foreach ($comptes as $compte) {
+            $nbrTransac[$compte->getNumeroDeCompte()] = $this->transacServ->searchTransacByACC($compte->getNumeroDeCompte());
+            
+            //$nbrTransac += $compte->getTransactions();
+        }
+
+        $this->renderHtml('compte/index.html.php', ['comptes' => $comptes,
+                                                    'nombre_transaction' => $nbrTransac]);
     }
 
     public function create()
     {
-        $this->renderHtml(__DIR__ . '/../../App/View/Pages/CreateAcc.html');
+        $this->renderHtml('compte/create.html.php');
     }
 
     public function store()

@@ -1,21 +1,59 @@
 <?php
 
-namespace App\Controllers;
+namespace App\controllers;
 
-use App\Core\Controller;
-use App\Entity\Transaction;
+use App\core\Controller;
+use App\service\ComptesService;
+use App\service\TransactionService;
 
 class TransactionController extends Controller
 {
+    private ComptesService $compteService;
+    private TransactionService $transacServ;
+
+    public function __construct()
+    {
+     $this->compteService = new ComptesService();
+     $this->transacServ = new TransactionService();
+    }
+
     public function index()
     {
-        $transactions = [];
-        $this->renderHtml(__DIR__ . '/../../App/View/Pages/ListTransac.html', ['transactions' => $transactions]);
+        $comptes =  $this->compteService->searchAcc();
+        $this->renderHtml('/transaction/index.html.php', ['comptes' => $comptes]);
     }
 
     public function create()
     {
-        $this->renderHtml(__DIR__ . '/../../App/View/Pages/AddTransac.html');
+        $comptes =  $this->compteService->searchAcc();
+        $this->renderHtml('/transaction/creat.html.php', ['comptes' => $comptes]);
+    }
+
+    public function list()
+    {
+        
+        $comptes =  $this->compteService->searchAcc();
+        //$transactions = $this->transacServ->searchTransacByACC($numeroDeCompte);
+        $this->renderHtml('/transaction/index.html.php', ['comptes' => $comptes]);
+
+    }
+
+    public function store()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $montant = $_POST['montant'] ?? null;
+            $type   = $_POST['type'] ?? null;
+            $numeroDeCompte = $_POST['numeroDeCompte'] ?? null;
+
+            
+            $this->transacServ->creatTransac(montant:$montant, type:$type, numeroDeCompte:$numeroDeCompte);    
+
+
+            header('Location: ' . WEB_ROOT . '/?controller=transaction&action=index');
+            exit;
+        }
+
+
     }
 
 }

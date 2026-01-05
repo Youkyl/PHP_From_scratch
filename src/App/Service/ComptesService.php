@@ -1,5 +1,5 @@
 <?php
-namespace App\Service;
+namespace App\service;
 
 use App\entity\Comptes;
 use App\entity\TypeDeCompte;
