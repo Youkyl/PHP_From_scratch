@@ -11,7 +11,7 @@ class Transaction{
     private float $montant;
     private TypeDeTransaction $type;
     private Comptes | null $compte;
-    private DateTime | null $date;
+    private DateTime | null | string $date;
     private float $frais;
 
 
@@ -20,7 +20,7 @@ class Transaction{
           TypeDeTransaction  $type,
            float $frais,
            Comptes|null $compte=null,
-           DateTime|null $date = null,
+           DateTime|null | string $date = null,
           int|null $id = null
     ) {
         $this->id = $id;

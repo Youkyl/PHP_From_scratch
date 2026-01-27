@@ -4,30 +4,43 @@ namespace App\service;
 use App\entity\Comptes;
 use App\entity\TypeDeCompte;
 use App\repository\ComptesRepository;
-use ReflectionClass;
+
 
 class ComptesService
 {
     
-
     private ComptesRepository $comptesRepo;
-    private $compteurNumero = 0;
+   // private int $compteurNumero = 40;
+    private static ComptesService | null $instance = null ;
 
-    public function __construct()
+    private function __construct()
     {
-        $this->comptesRepo = new ComptesRepository();
+        $this->comptesRepo =  ComptesRepository::getInstance();
     }
 
 
-    public function creatAcc($compte) : void{
+    public static function getInstance(): ComptesService
+    {
+        if (self::$instance === null) {
+            self::$instance = new ComptesService();
+        }
+        return self::$instance;
+    }
+
+
+    public function creatAcc(Comptes $compte) : void{
         
-        $compte->setNumero($this->generateNumAcc());
+        $compte->setNumeroDeCompte($this->generateNumAcc());
         $this->comptesRepo->insertCompte($compte);
     }
 
     public function generateNumAcc(): string
     {
-        return sprintf('CPT%05d', $this->compteurNumero++);
+        $lastInsertId = $this->comptesRepo->lastInserId();
+
+        $numero =  sprintf('CPT%05d', ++$lastInsertId);
+        //dd($numero);
+        return $numero;
     }
 
     public function initilizationSolde($numeroDeCompte, $montant) :void{

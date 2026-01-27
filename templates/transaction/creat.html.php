@@ -352,14 +352,14 @@
                     <h3>Nouvelle transaction</h3>
                 </div>
 
-                <form method="POST" action="<?= WEB_ROOT ?>/?controller=transaction&action=store">
+                <form method="POST" action="<?php echo WEB_ROOT ?>/?controller=transaction&action=store">
 
                     <div class="form-group">
                         <label>Sélectionner un compte</label>
                         <select name="numeroDeCompte" required>
                             <option value="">-- Choisir --</option>
                             <?php foreach ($comptes as $compte): ?>
-                                <option value="<?= $compte->getNumeroDeCompte() ?>" >
+                                <option value="<?= $compte->getNumeroDeCompte() ?>" name="numeroDeCompte">
                                     <?= $compte->getNumeroDeCompte() ?>
                                 </option>
                             <?php endforeach ?>
@@ -369,11 +369,11 @@
                     <div class="form-group">
                         <label>Type de transaction</label>
                         <div class="type-buttons">
-                            <button type="button" class="type-btn deposit active" id="btnDepot">
-                                <i class="fa-solid fa-arrow-down"></i> Dépôt
+                            <button type="button" class="type-btn deposit active" id="btnDepot" name ="type">
+                                <i class="fa-solid fa-arrow-down"></i> DEPOT
                             </button>
-                            <button type="button" class="type-btn withdraw" id="btnRetrait">
-                                <i class="fa-solid fa-arrow-up"></i> Retrait
+                            <button type="button" class="type-btn withdraw" id="btnRetrait" name ="type">
+                                <i class="fa-solid fa-arrow-up"></i> RETRAIT
                             </button>
                         </div>
                         <input type="hidden" name="type" id="typeTransaction" value="DEPOT">

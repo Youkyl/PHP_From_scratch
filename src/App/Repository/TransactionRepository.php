@@ -4,20 +4,31 @@ namespace App\repository;
 use App\core\Database;
 use App\entity\Transaction;
 use App\entity\TypeDeTransaction;
+use App\repository\Interface\TransactionRepositoryImp;
 use Exception;
 use PDO;
 
-class TransactionRepository{
+class TransactionRepository implements TransactionRepositoryImp
+{
  
+    private static TransactionRepository | null $instance = null;
     
     private PDO $db;
 
-    public function __construct()
+    private function __construct()
     {
         $this->db = Database::getInstance();
     }
 
-    public function insertTransaction($transaction) : void{
+    public static function getInstance(): TransactionRepository
+    {
+        if (self::$instance === null) {
+            self::$instance = new TransactionRepository();
+        }
+        return self::$instance;
+    }
+
+    public function insertTransaction(Transaction $transaction) : void{
 
           try 
           {
@@ -62,7 +73,7 @@ class TransactionRepository{
 }
 
 
-    public function selectTransaction($numeroDeCompte):array{
+    public function selectTransaction(string $numeroDeCompte):array{
 
 
         $sql = "
@@ -81,10 +92,11 @@ class TransactionRepository{
                  montant:$row['montant'],
                  type:TypeDeTransaction::fromDatabase($row['type']),
                  id: $row['id'],
-                 frais:$row['frais']
+                 frais:$row['frais'],
+                 date:$row['date_transaction']
             );
 
-            $row = $stmt->fetch();
+           // $row = $stmt->fetch();
         }
 
         return $transactions;

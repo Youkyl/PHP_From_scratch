@@ -11,15 +11,23 @@ class TransactionService
 
     private TransactionRepository $transactionRepo;
     private ComptesService $comptesService;
+    private static TransactionService | null  $instance = null;
 
-    public function __construct()
+    private function __construct()
     {
-        $this->transactionRepo = new TransactionRepository();
-        $this->comptesService = new ComptesService();
+        $this->transactionRepo = TransactionRepository::getInstance();
+        $this->comptesService = ComptesService::getInstance();
     }
 
+    public static function getInstance(): TransactionService
+    {
+        if (self::$instance === null) {
+            self::$instance = new TransactionService();
+        }
+        return self::$instance;
+    }
 
-    public function creatTransac($numeroDeCompte, $type, $montant) : bool{
+    public function creatTransac(string $numeroDeCompte, TypeDeTransaction $type, float $montant) : bool{
 
 
         $compte = $this->comptesService->searchAccByNum($numeroDeCompte);
@@ -70,7 +78,7 @@ class TransactionService
             montant: $montantFinal,
             type: $type,
             compte:  $compte,
-            frais:$frais,
+            frais: $frais,
         );
 
         $this->transactionRepo->insertTransaction($transaction);

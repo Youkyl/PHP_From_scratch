@@ -33,7 +33,7 @@ class Database
                         PDO::ATTR_EMULATE_PREPARES => false
                     ]
                 );
-
+            //dd(self::$instance);
             } catch (PDOException $e) {
                 die("Erreur base de données : " . $e->getMessage());
             }

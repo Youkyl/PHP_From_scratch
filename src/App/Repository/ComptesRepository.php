@@ -4,35 +4,60 @@ namespace App\repository;
 use App\core\Database;
 use App\entity\Comptes;
 use App\entity\TypeDeCompte;
+use App\repository\interface\CompteRepositoryImp;
 use PDO;
 
-class ComptesRepository
+class ComptesRepository implements CompteRepositoryImp
 {
+    private static ComptesRepository | null $instance = null;
     
     private PDO $db;
 
-    public function __construct()
+    private function __construct()
     {
         $this->db = Database::getInstance();
     }
 
-    public function insertCompte($compte) : void{
+
+    public static function getInstance(): ComptesRepository
+    {
+        if (self::$instance === null) {
+            self::$instance = new ComptesRepository();
+        }
+        return self::$instance;
+    }
 
 
+    public function insertCompte(Comptes $compte) : void{
+
+   //dd($compte);
+   //dd($this->db);
+
+    try {
         $sql = "
-            INSERT INTO compte (numero_compte, type, solde, duree_blocage)
-            VALUES (:num, :type::type_compte, :solde, :duree)
+            INSERT INTO compte (type, numero_compte, solde , duree_blocage ) 
+            VALUES(:type, :numero , :solde, :duree);
         ";
+        $numero = $compte->getNumeroDeCompte();
+       // dd($numero);
+       // dd($compte);
+        //$numero = "CPT00028";
 
-        $stmt = $this->db->prepare($sql);   
+        $stmt = $this->db->prepare($sql);  
+        //dd($stmt);
 
         $stmt->execute([
-            ':num' => $compte->getNumeroDeCompte(),
+            ':numero' => $numero,
             ':type' => $compte->getType()->name,
             ':solde' => $compte->getSolde(),
             ':duree' => $compte->getDureeDeblocage()
         ]);
+        //$stmt->execute();
+    } catch (\PDOException $e) {
+        throw new \Exception("Erreur lors de l'insertion du compte : " . $e->getMessage());
 
+    }
+        
  
         
     }
@@ -41,15 +66,18 @@ class ComptesRepository
     
     public function selectAll(): array
     {
-        $stmt = $this->db->query("SELECT * FROM compte");
+        
+//dd($this->db);
+        $stmt = $this->db->query("SELECT * FROM compte
+            ORDER BY numero_compte ASC");
         $comptes = [];
 
         while ($row = $stmt->fetch()) {
             $comptes[] = new Comptes(
-                $row['numero_compte'],
-                $row['solde'],
-                TypeDeCompte::fromDatabase($row['type']),
-                $row['duree_blocage']
+                numeroDeCompte: $row['numero_compte'],
+                solde: floatval($row['solde']),
+                type: TypeDeCompte::fromDatabase($row['type']),
+                dureeDeblocage: $row['duree_blocage']
             );
         }
 
@@ -57,7 +85,7 @@ class ComptesRepository
     }
 
 
-    public function selectAccByNum($numeroCompte):Comptes {
+    public function selectAccByNum(string $numeroCompte):Comptes {
         //var_dump($numeroCompte);
         //exit;
     
@@ -70,10 +98,10 @@ class ComptesRepository
 
         if ($row) {
             return new Comptes(
-                $row['numero_compte'],
-                $row['solde'],
-                TypeDeCompte::fromDatabase($row['type']),
-                $row['duree_blocage']
+                numeroDeCompte: $row['numero_compte'],
+                solde: floatval($row['solde']),
+                type: TypeDeCompte::fromDatabase($row['type']),
+                dureeDeblocage: $row['duree_blocage']
             );
         }
 
@@ -81,7 +109,7 @@ class ComptesRepository
     }
 
 
-    public function updateSoldeAcc( $numeroDeCompte, $newSolde) : void {
+    public function updateSoldeAcc( string $numeroDeCompte, $newSolde) : void {
         $sql = "
             UPDATE compte
             SET solde = :solde
@@ -97,10 +125,20 @@ class ComptesRepository
 
         throw new \Exception("Erreur lors de la mise à jour du solde pour le compte : " . $numeroDeCompte);
     }
+    
+    public function lastInserId(): int {
+        $sql = "
+            SELECT max(id) as max FROM compte
+            ";
+
+        $stmt = $this->db->prepare($sql);   
+        $stmt->execute();
+        $row = $stmt->fetch();
+        return intval($row['max']);
+    }
 
 
 
 
 
 }
-

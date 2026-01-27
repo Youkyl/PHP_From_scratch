@@ -205,32 +205,62 @@
                 </div>
             </a>
         </div>
+        <br>
 
-        <?php if (empty($comptes)): ?>
+            <?php if (isset($comptes)): ?>
 
-            <!-- ÉTAT 1 : AUCUN COMPTE -->
-            <div class="empty">
-                <i class="fa-solid fa-list"></i>
-                <h3>Aucun compte disponible</h3>
-            </div>
+                <div class="info">
+                    <div>
+                        <small>Titulaire</small><br>
+                        <strong>HOUNKPATIN Youan</strong>
+                    </div>
+                    <div>
+                        <small>Solde actuel</small><br>
+                        <strong><?= number_format($comptes->getSolde(),2,',',' ') ?> FCFA</strong>
+                    </div>
+                </div>
 
-        <?php else: ?>
+                <?php if (empty($transactions)): ?>
 
-            <div class="form-group">
-                
-                    <label>Sélectionner un compte</label>
-                    <select onchange="location.href=this.value">
-                        <option value="">-- Choisir --</option>
-                        <?php foreach ($comptes as $c): ?>
-                            <option value="<?= WEB_ROOT ?>/?controller=transaction&action=list&donnee=<?= $c->getNumeroDeCompte() ?>"
-                                <?= isset($compte) && $compte->getId()===$c->getId() ? 'selected':'' ?>>
-                                <?= $c->getNumeroDeCompte() ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-            </div>
+                    <!-- ÉTAT 2 : AUCUNE TRANSACTION -->
+                    <div class="empty">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <p>Aucune transaction enregistrée</p>
+                    </div>
 
-        <?php endif; ?>
+                <?php else: ?>
+
+                    <!-- ÉTAT 3 : TABLE -->
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>DATE</th>
+                                <th>TYPE</th>
+                                <th>DESCRIPTION</th>
+                                <th>MONTANT</th>
+                                <th>FRAIS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($transactions as $t): ?>
+                            <tr>
+                                <td><?= $t->getDate() ?></td>
+                                <td>
+                                    <?= $t->getType()->value  ?>
+                                </td>
+                                <td>None</td>
+                                <td >
+                                    <?= number_format($t->getMontant(),2,',',' ') ?> FCFA
+                                </td>
+                                <td><?= number_format($t->getFrais(),2,',',' ') ?> FCFA</td>
+                            </tr>
+                        <?php endforeach ?>
+                        </tbody>
+                    </table>
+
+                <?php endif; ?>
+
+            <?php endif; ?>
 
     </div>
 

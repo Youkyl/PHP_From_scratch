@@ -4,16 +4,42 @@ namespace App\core;
 
 class Router
 {
+
+    
     public function run()
     {
         /*
              http://localhost:8000/index.php?controller=compte&action=create
              $controller = $_GET['controller'];  ==> compte
              $action =  $_GET['action'];
+
          */
+
+            /* 
+                  $url =   http://localhost:8000/index.php/home/index
+              $routes = [
+                'home' => [
+                    'controller' => HomeController::class,
+                    'actions' => ['index'],
+
+                ],
+
+                'compte' => [
+                    'controller' => CompteController::class,
+                    'actions' => ['index', 'create', 'store'],
+                ],
+
+                'transaction' => [
+                    'controller' => TransactionController::class,
+                    'actions' => ['index', 'create', 'store', 'list'],
+                ],
+              ]
+           Documentation sur $_SERVER
+            */
 
         $controller = $_REQUEST['controller'] ?? 'home';  //ucfirst(home) ==> Home
         $action     = $_REQUEST['action'] ?? 'index';
+        $donnee     = $_REQUEST['donnee'] ?? null;
 
         $controllerClass = 'App\\Controllers\\' . ucfirst($controller) . 'Controller';
       
@@ -30,6 +56,6 @@ class Router
             return;
         }
         
-        $controllerInstance->$action();
+        $controllerInstance->$action($donnee);
     }
 }

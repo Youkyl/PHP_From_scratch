@@ -87,13 +87,13 @@
                                 <td>
                                     <span class="badge badge-green">Actif</span>
                                 </td>
-                                <td><?php echo $compte->getSolde()?> FCFA</td>
+                                <td><?= number_format($compte->getSolde(),2,',',' ') ?> FCFA</td>
 
                                 <?php if (empty($nbrTransac)) : ?>
                                     <td>Aucune transaction sur ce compte</td>
                                 <?php else : ?>
                                     
-                                    <td><?php echo $nbrTransac ?></td>
+                                    <td><?php echo count($nbrTransac) ?></td>
 
                                 <?php endif; ?>
 

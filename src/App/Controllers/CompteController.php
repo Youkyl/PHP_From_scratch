@@ -3,7 +3,10 @@
 namespace App\controllers;
 
 use App\core\Controller;
+use App\core\Route;
+use App\core\Validator;
 use App\entity\Comptes;
+use App\entity\TypeDeCompte;
 use App\service\ComptesService;
 use App\service\TransactionService;
 
@@ -11,11 +14,21 @@ class CompteController extends Controller
 {
     private ComptesService $compteService;
     private TransactionService $transacServ;
+    private Validator $validator;
+    private static CompteController | null $instance = null;
 
     public function __construct()
     {
-     $this->compteService = new ComptesService();
-     $this->transacServ = new TransactionService();
+     $this->compteService = ComptesService::getInstance();
+     $this->transacServ = TransactionService::getInstance();
+    }
+
+    public static function getInstance(): CompteController
+    {
+        if (self::$instance === null) {
+            self::$instance = new CompteController();
+        }
+        return self::$instance;
     }
     
     public function index()
@@ -23,16 +36,18 @@ class CompteController extends Controller
         $comptes =  $this->compteService->searchAcc();
         $transactions = $this->transacServ->searchTransac();
 
-        $nbrTransac = [];
+        $nbrTransac = 0;
 
         foreach ($comptes as $compte) {
-            $nbrTransac[$compte->getNumeroDeCompte()] = $this->transacServ->searchTransacByACC($compte->getNumeroDeCompte());
+            $nbrTransac = ($this->transacServ->searchTransacByACC($compte->getNumeroDeCompte())) ;
+            
             
             //$nbrTransac += $compte->getTransactions();
         }
+        //dd($nbrTransac);
 
         $this->renderHtml('compte/index.html.php', ['comptes' => $comptes,
-                                                    'nombre_transaction' => $nbrTransac]);
+                                                    'nbrTransac' => $nbrTransac]);
     }
 
     public function create()
@@ -40,24 +55,41 @@ class CompteController extends Controller
         $this->renderHtml('compte/create.html.php');
     }
 
+
     public function store()
     {
+    
+        $data = $_POST; 
 
-        var_dump($_POST);
-        exit;
+        $validator = Validator::getInstance($data);
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $numero = $_POST['numero'] ?? null;
+          
+
+            $validator->setRules([
+                'type' => ['required', 'AccType'],
+                'solde' => ['numeric']
+            ]);
+
             $solde  = $_POST['solde'] ?? 0;
             $type   = $_POST['type'] ?? null;
             $dureeBlocage = $_POST['dureeBlocage'] ?? null;
-
-            $compte = new Comptes($numero, $solde, type:$type, dureeDeblocage:$dureeBlocage);
             
-            $this->compteService->creatAcc($compte);    
+            if (!$validator->passes()) {
 
-
-            header('Location: index.php?action=comptes');
-            exit;
+                print_r($validator->errors());
+                exit;
+            } else{
+                    $compte = new Comptes(
+                    type:TypeDeCompte::fromDatabase($type),
+                    solde:floatval($solde),
+                    dureeDeblocage:$type === 'EPARGNE' ? intval($dureeBlocage) : null
+                );
+                 $this->compteService->creatAcc($compte);    
+                 
+                 $this->redirect('controller=home&action=index');
+            }
+            
         }
     }
     

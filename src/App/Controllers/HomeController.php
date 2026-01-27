@@ -15,12 +15,13 @@ class HomeController extends Controller
 
     public function __construct()
     {
-     $this->compteService = new ComptesService();
-     $this->transacServ = new TransactionService();
+     $this->compteService = ComptesService::getInstance();
+     $this->transacServ = TransactionService::getInstance();
     }   
 
     public function index()
     {
+        
         $comptes =  $this->compteService->searchAcc();
         $transac = $this->transacServ->searchTransac();
 
@@ -44,9 +45,9 @@ class HomeController extends Controller
         
         $this->renderHtml('/home/index.html.php', ['comptes' => $comptes,
                                                     'totalSolde' => $totalSolde,
-                                                    'transaction' => $transac,
+                                                    'transac' => $transac,
                                                     'totalEpargne' => $totalEpargne,
                                                     'totalCheque' => $totalCheque,
-                                                    'ComptesBloque' => $comptesBloq]);
+                                                    'comptesBloq' => $comptesBloq]);
     }
 }

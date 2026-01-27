@@ -47,7 +47,7 @@
                 <h3>Informations du compte</h3>
             </div>
 
-            <form method="POST" action="<?= WEB_ROOT ?>/?controller=compte&action=store">
+            <form method="POST" action="<?php echo WEB_ROOT ?>/?controller=compte&action=store">
                 <div class="form-group">
                     <label>Nom du titulaire</label>
                     <input type="text" name="titulaire" placeholder="Ex : Jean Dupont" required>

@@ -3,6 +3,8 @@
 namespace App\controllers;
 
 use App\core\Controller;
+use App\entity\TypeDeCompte;
+use App\entity\TypeDeTransaction;
 use App\service\ComptesService;
 use App\service\TransactionService;
 
@@ -13,8 +15,8 @@ class TransactionController extends Controller
 
     public function __construct()
     {
-     $this->compteService = new ComptesService();
-     $this->transacServ = new TransactionService();
+     $this->compteService = ComptesService::getInstance();
+     $this->transacServ = TransactionService::getInstance();
     }
 
     public function index()
@@ -29,12 +31,15 @@ class TransactionController extends Controller
         $this->renderHtml('/transaction/creat.html.php', ['comptes' => $comptes]);
     }
 
-    public function list()
+    //#[Route('/transaction/list.html.php/{numeroDeCompte}', methods:['GET'])]
+   
+    public function list($numeroDeCompte)
     {
-        
-        $comptes =  $this->compteService->searchAcc();
-        //$transactions = $this->transacServ->searchTransacByACC($numeroDeCompte);
-        $this->renderHtml('/transaction/index.html.php', ['comptes' => $comptes]);
+        $comptes =  $this->compteService->searchAccByNum($numeroDeCompte);
+        $transactions = $this->transacServ->searchTransacByACC($numeroDeCompte);
+       // dd( $transactions);
+       // dd($comptes);
+        $this->renderHtml('/transaction/list.html.php', ['comptes' => $comptes, 'transactions' => $transactions]);
 
     }
 
@@ -45,15 +50,21 @@ class TransactionController extends Controller
             $type   = $_POST['type'] ?? null;
             $numeroDeCompte = $_POST['numeroDeCompte'] ?? null;
 
+            //dd( $montant, $type, $numeroDeCompte);
+
             
-            $this->transacServ->creatTransac(montant:$montant, type:$type, numeroDeCompte:$numeroDeCompte);    
+            $this->transacServ->creatTransac(
+                montant:$montant, 
+                type:TypeDeTransaction::fromDatabase($type),
+                numeroDeCompte:$numeroDeCompte);    
 
 
-            header('Location: ' . WEB_ROOT . '/?controller=transaction&action=index');
-            exit;
+            
+            $this->redirect('controller=transaction&action=create');
         }
 
 
     }
+    
 
 }

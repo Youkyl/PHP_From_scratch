@@ -6,19 +6,19 @@ namespace App\entity;
 class Comptes
 {
     private  ?int $id;
-    private  string $numeroDeCompte;
+    private  string|null $numeroDeCompte;
     private  float $solde;
     private  TypeDeCompte $type;
     private  ?int $dureeDeblocage;
     private  array $transactions;
 
     public function __construct(
-         string $numeroDeCompte,
-         float $solde = 0.0,
-         TypeDeCompte $type,
-         int | null $dureeDeblocage = null,
-         int | null $id = null,
-         array $transactions = []
+              TypeDeCompte $type,
+              float $solde ,
+              string|null $numeroDeCompte = null,
+              int | null $dureeDeblocage = null,
+              int | null $id = null,
+              array $transactions = []
     ) {
         $this->id = $id;
         $this->numeroDeCompte = $numeroDeCompte;
@@ -102,5 +102,15 @@ class Comptes
         }
 
         return $info;
+    }
+
+    /**
+     * Set the value of numeroDeCompte
+     */
+    public function setNumeroDeCompte(?string $numeroDeCompte): self
+    {
+        $this->numeroDeCompte = $numeroDeCompte;
+
+        return $this;
     }
 }

@@ -65,7 +65,7 @@
                             <i class="fa-solid fa-coins"></i>
                         </div>
                     </div>
-                    <h2><?= number_format($totalSolde, 0, ',', ' ') ?> FCFA</h2>
+                    <h2><?= number_format($totalSolde, 2, ',', ' ') ?> FCFA</h2>
                 </div>
                 
                 <div class="stat-card">
